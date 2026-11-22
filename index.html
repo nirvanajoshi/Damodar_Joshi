@@ -42,7 +42,182 @@
   <!-- ============================= PAGE CONTENT ============================= -->
   <main id="main">
 
-    <!-- TODO: home page content (hero, featured work, contact call-to-action) -->
+    <!-- ================================ HERO ================================ -->
+    <section class="hero">
+      <div class="container">
+        <p class="hero-eyebrow">Hello, I'm</p>
+        <h1>Damodar Joshi</h1>
+        <p class="hero-role">Networking &amp; Python/Django Developer</p>
+        <p class="hero-text">
+          I build and secure networks, and I write Python to automate them. I'm open to
+          entry-level network roles, collaborations, mentorship, and study groups.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn" href="contact.html">Let's Connect</a>
+          <a class="btn-outline" href="projects.html">View Projects</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================= "LET'S CONNECT" STRIP ====================== -->
+    <section>
+      <div class="container">
+        <div class="connect-panel">
+          <div>
+            <p class="connect-label">Let's Connect</p>
+            <p class="connect-text">Open to these, and happy to talk about any of them.</p>
+          </div>
+
+          <div class="connect-body">
+            <ul class="tag-list">
+              <li><span class="badge">Entry-level network roles</span></li>
+              <li><span class="badge">Collaborations</span></li>
+              <li><span class="badge">Mentorship</span></li>
+              <li><span class="badge">Study groups</span></li>
+            </ul>
+
+            <ul class="social-icons" aria-label="Social links">
+              <li>
+                <a href="https://github.com/nirvanajoshi" target="_blank" rel="noopener" aria-label="GitHub">
+                  <i data-lucide="github" aria-hidden="true"></i>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.linkedin.com/in/damodar-joshi-8661382ab" target="_blank" rel="noopener" aria-label="LinkedIn">
+                  <i data-lucide="linkedin" aria-hidden="true"></i>
+                </a>
+              </li>
+              <li>
+                <a href="mailto:damodarj36@gmail.com" aria-label="Email">
+                  <i data-lucide="mail" aria-hidden="true"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== WHAT I CAN HELP WITH ========================== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-title">
+          <h2>What I Can Help With</h2>
+          <p>Areas I've practiced hands-on and am glad to share.</p>
+        </div>
+
+        <div class="grid-3">
+          <article class="card help-card">
+            <span class="help-icon" aria-hidden="true"><i data-lucide="flask-conical"></i></span>
+            <h3>Packet Tracer Labs</h3>
+            <p>Building and troubleshooting Cisco Packet Tracer topologies, learned through the full CCNA curriculum.</p>
+          </article>
+
+          <article class="card help-card">
+            <span class="help-icon" aria-hidden="true"><i data-lucide="network"></i></span>
+            <h3>VLANs &amp; Routing Basics</h3>
+            <p>VLANs, 802.1Q trunking, inter-VLAN routing, static routes, and OSPFv2.</p>
+          </article>
+
+          <article class="card help-card">
+            <span class="help-icon" aria-hidden="true"><i data-lucide="code-2"></i></span>
+            <h3>Python &amp; Django Starters</h3>
+            <p>Python scripting practice and Django starter projects, including my Job Portal and Skill Swap builds.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================= FEATURED PROJECTS ========================== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Featured Projects</h2>
+          <p>A mix of Cisco Packet Tracer labs and Django builds.</p>
+        </div>
+
+        <div class="grid-3">
+          <!-- 1. Cisco networking lab (links to the PDF) -->
+          <article class="card project-card">
+            <span class="badge badge--plain project-badge">Cisco Lab</span>
+            <span class="project-icon" aria-hidden="true"><i data-lucide="server"></i></span>
+            <h3 class="project-title">DHCP Server with Inter-VLAN Routing</h3>
+            <p class="project-desc">
+              A router acting as a DHCP server with address pools, default gateway, DNS,
+              and excluded ranges, serving VLAN 10 and VLAN 20 across two switches.
+            </p>
+            <ul class="tag-list">
+              <li><span class="tag">DHCP</span></li>
+              <li><span class="tag">Inter-VLAN Routing</span></li>
+              <li><span class="tag">VLANs</span></li>
+            </ul>
+            <div class="project-footer">
+              <a class="btn-outline" href="assets/pdfs/dhcp-server-configuration.pdf" target="_blank" rel="noopener">
+                View Details <i data-lucide="arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <!-- 2. Django development project (links to GitHub) -->
+          <article class="card project-card">
+            <span class="badge badge--plain project-badge">Django / Web</span>
+            <span class="project-icon" aria-hidden="true"><i data-lucide="briefcase"></i></span>
+            <h3 class="project-title">Job Portal V2</h3>
+            <p class="project-desc">
+              A job portal where employers post openings and job seekers browse and apply,
+              rebuilt with cleaner models and separate user roles.
+            </p>
+            <ul class="tag-list">
+              <li><span class="tag">Python</span></li>
+              <li><span class="tag">Django</span></li>
+              <li><span class="tag">HTML</span></li>
+              <li><span class="tag">CSS</span></li>
+            </ul>
+            <div class="project-footer">
+              <a class="btn-outline" href="https://github.com/nirvanajoshi/Job_PortalV2" target="_blank" rel="noopener">
+                View Details <i data-lucide="arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <!-- 3. This website (links to its GitHub repo) -->
+          <article class="card project-card">
+            <span class="badge badge--plain project-badge">Web</span>
+            <span class="project-icon" aria-hidden="true"><i data-lucide="layout-template"></i></span>
+            <h3 class="project-title">Personal Networking Portfolio</h3>
+            <p class="project-desc">
+              A static portfolio built with HTML, CSS, and JavaScript to share my work and
+              connect with people, hosted on GitHub Pages.
+            </p>
+            <ul class="tag-list">
+              <li><span class="tag">HTML</span></li>
+              <li><span class="tag">CSS</span></li>
+              <li><span class="tag">JavaScript</span></li>
+            </ul>
+            <div class="project-footer">
+              <a class="btn-outline" href="https://github.com/nirvanajoshi/damodarjoshi" target="_blank" rel="noopener">
+                View Details <i data-lucide="arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================== FINAL CALL-TO-ACTION ==================== -->
+    <section class="section">
+      <div class="container">
+        <div class="card cta-card">
+          <h2>Let's build something together</h2>
+          <p>
+            Whether it's a network lab, a Django project, or an internship, I'd be glad to
+            hear from you.
+          </p>
+          <a class="btn" href="contact.html">Contact Me</a>
+        </div>
+      </div>
+    </section>
 
   </main>
 
