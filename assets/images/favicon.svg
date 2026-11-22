@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Damodar Joshi">
+  <!-- Dark rounded tile with the </> mark used in the navbar logo -->
+  <rect width="64" height="64" rx="14" fill="#0a0b0d"/>
+  <rect x="1" y="1" width="62" height="62" rx="13" fill="none" stroke="#262a32" stroke-width="2"/>
+  <path d="M26 21 L16 32 L26 43" fill="none" stroke="#5b9dff" stroke-width="4"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M38 21 L48 32 L38 43" fill="none" stroke="#5b9dff" stroke-width="4"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M35 17 L29 47" fill="none" stroke="#f3f4f6" stroke-width="4"
+        stroke-linecap="round"/>
+</svg>

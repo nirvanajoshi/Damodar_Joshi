@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+
+# npm logs
+npm-debug.log*
+yarn-error.log*
+
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# Note: css/style.css is intentionally NOT ignored — it is the compiled,
+# minified stylesheet that GitHub Pages serves without running a build.

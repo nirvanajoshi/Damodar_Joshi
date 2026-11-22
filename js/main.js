@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", function () {
   initContactForm();
   initScrollEffects();
   initScrollReveal();
+  initCliName();
+  initPageTransitions();
+  initImageFallbacks();
   initFooterYear();
   renderIcons();
 });
@@ -316,5 +319,129 @@ function initScrollReveal() {
     // Small stagger so grids don't pop in all at once
     element.style.setProperty("--reveal-delay", (index % 3) * 80 + "ms");
     observer.observe(element);
+  });
+}
+
+/* --------------------------------------------------------------------------
+   Missing-image fallback
+   The about page shows a monogram behind the profile photo. If the image
+   file hasn't been added yet, hide the broken <img> so the monogram shows
+   cleanly instead of unstyled alt text.
+   -------------------------------------------------------------------------- */
+function initImageFallbacks() {
+  var images = document.querySelectorAll(".profile-photo img");
+
+  Array.prototype.forEach.call(images, function (img) {
+    function hide() {
+      img.remove();
+    }
+
+    // The error may have fired before this script ran, so check that too.
+    if (img.complete && img.naturalWidth === 0) {
+      hide();
+      return;
+    }
+
+    img.addEventListener("error", hide);
+  });
+}
+
+/* --------------------------------------------------------------------------
+   Terminal-style name
+   The home and about pages mark the name with data-cli-name. We wrap each
+   letter in a span so CSS can fade them in one at a time (a typewriter
+   effect) and add a blinking block cursor after it.
+   The original text is kept for screen readers via aria-label, and if this
+   script or the CSS animation never runs the plain text stays visible.
+   -------------------------------------------------------------------------- */
+function initCliName() {
+  var names = document.querySelectorAll("[data-cli-name]");
+
+  if (!names.length) return;
+  if (prefersReducedMotion()) return; // leave the name static
+
+  Array.prototype.forEach.call(names, function (element) {
+    var text = element.textContent.trim();
+
+    element.setAttribute("aria-label", text);
+    element.textContent = "";
+
+    var fragment = document.createDocumentFragment();
+    var index = 0;
+
+    // One wrapper per word, so a narrow screen can wrap between words
+    // instead of splitting a letter off in the middle of the name.
+    text.split(" ").forEach(function (word, wordIndex) {
+      if (wordIndex > 0) fragment.appendChild(document.createTextNode(" "));
+
+      var wordEl = document.createElement("span");
+      wordEl.className = "cli-word";
+
+      for (var i = 0; i < word.length; i++) {
+        var character = document.createElement("span");
+        character.className = "cli-char";
+        character.style.setProperty("--i", index);
+        character.textContent = word.charAt(i);
+        wordEl.appendChild(character);
+        index++;
+      }
+
+      fragment.appendChild(wordEl);
+    });
+
+    // Blinking block cursor, like the one in a terminal. It appears once the
+    // last letter is in, so it never floats ahead of the text being typed.
+    var caret = document.createElement("span");
+    caret.className = "cli-caret";
+    caret.style.setProperty("--caret-delay", index * 55 + 80 + "ms");
+    caret.setAttribute("aria-hidden", "true");
+    fragment.appendChild(caret);
+
+    element.appendChild(fragment);
+  });
+}
+
+/* --------------------------------------------------------------------------
+   Page transitions
+   Every page fades its <main> in via CSS. For link clicks we also fade the
+   page out for a moment before navigating, so switching pages feels smooth
+   instead of flashing. New tabs, downloads, mail links and hash links are
+   left to the browser, and visitors with reduced motion get instant loads.
+   -------------------------------------------------------------------------- */
+function initPageTransitions() {
+  // Coming back with the browser's back/forward cache: clear the fade-out
+  // class, otherwise the restored page would stay invisible.
+  window.addEventListener("pageshow", function () {
+    document.documentElement.classList.remove("page-leaving");
+  });
+
+  if (prefersReducedMotion()) return;
+
+  document.addEventListener("click", function (event) {
+    // Let modified clicks (new tab, new window, download) behave normally
+    if (event.defaultPrevented || event.button !== 0) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+    var link = event.target.closest ? event.target.closest("a") : null;
+    if (!link) return;
+
+    var href = link.getAttribute("href");
+    if (!href || link.target === "_blank" || link.hasAttribute("download")) return;
+    if (/^(mailto:|tel:|#)/i.test(href)) return;
+
+    // Only animate between pages of this site
+    if (link.origin !== window.location.origin) return;
+
+    // Same page with an anchor: let the browser scroll instead
+    if (link.pathname === window.location.pathname && link.hash) return;
+
+    event.preventDefault();
+
+    var destination = link.href;
+    document.documentElement.classList.add("page-leaving");
+
+    window.setTimeout(function () {
+      window.location.href = destination;
+    }, 180);
   });
 }

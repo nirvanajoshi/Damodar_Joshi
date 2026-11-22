@@ -1,0 +1,1838 @@
+/* ==========================================================================
+   Damodar Joshi — Personal Networking Portfolio
+   Tailwind source stylesheet.
+
+   This file is the single source of truth for styling. It is compiled by the
+   Tailwind CLI into the minified css/style.css that GitHub Pages serves.
+
+   Do not edit css/style.css by hand — edit this file and run `npm run build`.
+   ========================================================================== */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   BASE LAYER — design tokens, reset, typography, links and focus styles.
+   Everything visual is driven by the tokens below, so the whole site can be
+   re-themed from one place. The same tokens are exposed to Tailwind as theme
+   values in tailwind.config.js (bg-surface, text-muted, rounded-pill, ...).
+   ========================================================================== */
+@layer base {
+/* --------------------------------------------------------------------------
+   1. Design tokens
+   Everything visual is driven from here, so the whole site can be re-themed
+   by editing a few values in one place.
+   -------------------------------------------------------------------------- */
+:root {
+  /* Colors — dark, minimal, low-contrast surfaces with a single accent */
+  --bg: #0a0b0d;           /* page background: near-black */
+  --surface: #121418;      /* cards: slightly lighter than the page */
+  --surface-2: #191c22;    /* hovered cards, inputs, secondary chips */
+  --border: #262a32;       /* subtle borders */
+  --border-strong: #363b45;
+  --text: #f3f4f6;         /* primary text */
+  --muted: #9aa1ad;        /* secondary text */
+  --accent: #5b9dff;       /* links, buttons, highlights */
+  --accent-soft: rgba(91, 157, 255, 0.12);  /* tinted backgrounds */
+  --accent-strong: #7fb4ff;                 /* accent on hover */
+
+  /* Spacing scale (4px base) */
+  --space-1: 0.25rem;   /*  4px */
+  --space-2: 0.5rem;    /*  8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.5rem;    /* 24px */
+  --space-6: 2rem;      /* 32px */
+  --space-7: 2.5rem;    /* 40px */
+  --space-8: 3rem;      /* 48px */
+  --space-9: 4rem;      /* 64px */
+  --space-10: 6rem;     /* 96px */
+
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* Typography — the whole site uses a monospace (terminal) face */
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+               "Liberation Mono", monospace;
+
+  /* Layout */
+  --container-width: 1100px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition: 250ms ease;
+
+  /* Shadows */
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset
+   A small, modern reset: predictable box sizing, no default margins,
+   media that never overflows its container.
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Keep anchor targets clear of the sticky header */
+  scroll-padding-top: 88px;
+  /* Stop iOS from inflating text in landscape */
+  -webkit-text-size-adjust: 100%;
+}
+
+body,
+h1, h2, h3, h4, h5, h6,
+p, figure, blockquote, dl, dd {
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  /* Small-viewport unit avoids the mobile-browser address bar overshoot */
+  min-height: 100svh;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Form controls should inherit the page font */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Long words and URLs shouldn't break the layout on small screens */
+p,
+h1, h2, h3, h4 {
+  overflow-wrap: break-word;
+}
+
+/* --------------------------------------------------------------------------
+   3. Base typography
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); }
+h3 { font-size: clamp(1.15rem, 2.5vw, 1.35rem); }
+h4 { font-size: 1.05rem; }
+
+p {
+  color: var(--text);
+}
+
+small {
+  font-size: 0.85rem;
+}
+
+strong {
+  font-weight: 600;
+  color: var(--text);
+}
+
+::selection {
+  background-color: var(--accent);
+  color: #06111f;
+}
+
+/* --------------------------------------------------------------------------
+   4. Links & focus
+   -------------------------------------------------------------------------- */
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-strong);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Visible, consistent keyboard focus for every interactive element */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+}
+
+/* ==========================================================================
+   COMPONENTS LAYER — the site's reusable blocks (.btn, .card, .nav, .hero,
+   lab rows, form fields, page transitions). Kept as component classes so the
+   markup stays semantic and readable; utilities can still override them
+   because Tailwind emits the utilities layer after this one.
+   ========================================================================== */
+@layer components {
+/* --------------------------------------------------------------------------
+   5. Layout helpers
+   -------------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding-inline: var(--space-4);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6. Buttons
+   .btn        — solid accent button (primary action, e.g. "Contact me")
+   .btn-outline — transparent button with a border (secondary action)
+   Both are pill-shaped and stack full-width on very small screens.
+   -------------------------------------------------------------------------- */
+.btn,
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast),
+              color var(--transition-fast),
+              transform var(--transition-fast);
+}
+
+/* Solid accent button */
+.btn {
+  background-color: var(--accent);
+  color: #06111f;
+}
+
+.btn:hover {
+  background-color: var(--accent-strong);
+  color: #06111f;
+  text-decoration: none;
+}
+
+/* Outline button */
+.btn-outline {
+  background-color: transparent;
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.btn-outline:hover {
+  background-color: var(--surface-2);
+  border-color: var(--accent);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.btn:active,
+.btn-outline:active {
+  transform: translateY(1px);
+}
+
+/* --------------------------------------------------------------------------
+   7. Badges and tags
+   .badge — small status pill, e.g. "Open to internships"
+   .tag   — small pill for tech names, e.g. "Python", "OSPF"
+   -------------------------------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background-color: var(--accent-soft);
+  color: var(--accent-strong);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* A small dot, useful for "available" style badges */
+.badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+/* Static, labelled badges don't need the dot: use .badge--plain */
+.badge--plain::before {
+  display: none;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background-color: var(--surface-2);
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* Optional wrapper so a row of tags wraps neatly */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+/* --------------------------------------------------------------------------
+   8. Cards
+   -------------------------------------------------------------------------- */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  height: 100%;
+  padding: var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface);
+  transition: transform var(--transition),
+              border-color var(--transition),
+              box-shadow var(--transition);
+}
+
+/* Subtle lift on hover — pointer devices only, so it doesn't stick on touch */
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-card);
+  }
+}
+
+.card p {
+  color: var(--muted);
+}
+
+/* --------------------------------------------------------------------------
+   9. Section titles
+   Centered heading, a short thin gradient rule underneath, then a muted
+   subtitle. Markup:
+
+     <div class="section-title">
+       <h2>Projects</h2>
+       <p>Optional subtitle</p>
+     </div>
+   -------------------------------------------------------------------------- */
+.section-title {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto var(--space-8);
+}
+
+.section-title h2 {
+  margin: 0;
+}
+
+/* The gradient rule under the heading */
+.section-title h2::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 2px;
+  margin: var(--space-4) auto 0;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.section-title p {
+  margin-top: var(--space-4);
+  color: var(--muted);
+  font-size: 0.975rem;
+}
+
+/* --------------------------------------------------------------------------
+   10. Page shell
+   Sticky header + <main> that grows, so the footer always sits at the bottom
+   of the window even on short pages.
+   -------------------------------------------------------------------------- */
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+  padding-block: var(--space-8) var(--space-10);
+}
+
+/* --------------------------------------------------------------------------
+   11. Navbar
+   Sticky, translucent, blurred. Below 768px the links collapse into a
+   hamburger panel; above that they sit in a row on the right.
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--border);
+  background-color: rgba(10, 11, 13, 0.78);
+  /* Glass effect: blurs the page content scrolling underneath */
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  transition: background-color var(--transition), box-shadow var(--transition);
+}
+
+/* Added by js/main.js once the page is scrolled a little */
+.site-header.is-scrolled {
+  background-color: rgba(10, 11, 13, 0.92);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+.navbar {
+  position: relative; /* anchor for the mobile menu panel */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: 68px;
+}
+
+/* Logo: bold text inside a bordered, rounded box */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.logo:hover {
+  border-color: var(--accent);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.logo-mark {
+  color: var(--accent);
+}
+
+/* Hamburger button (mobile only) */
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: transparent;
+  color: var(--text);
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast);
+}
+
+.nav-toggle:hover {
+  background-color: var(--surface-2);
+  border-color: var(--border-strong);
+}
+
+.nav-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Only show the matching icon for the current open/closed state */
+.nav-toggle .icon-close {
+  display: none;
+}
+
+.nav-toggle[aria-expanded="true"] .icon-menu {
+  display: none;
+}
+
+.nav-toggle[aria-expanded="true"] .icon-close {
+  display: inline-flex;
+}
+
+/* Mobile menu panel (closed by default) */
+.nav-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: none;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-4) var(--space-4) var(--space-5);
+  list-style: none;
+  border-bottom: 1px solid var(--border);
+  background-color: rgba(10, 11, 13, 0.98);
+}
+
+.nav-menu.is-open {
+  display: flex;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color var(--transition-fast),
+              background-color var(--transition-fast),
+              border-color var(--transition-fast);
+}
+
+.nav-link:hover {
+  border-color: var(--border-strong);
+  background-color: var(--surface-2);
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Active page: highlighted pill */
+.nav-link.is-active {
+  border-color: var(--border-strong);
+  background-color: var(--surface-2);
+  color: var(--text);
+}
+
+/* Contact stands out a little more than the other links */
+.nav-link--cta {
+  border-color: var(--accent);
+  background-color: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
+.nav-link--cta:hover,
+.nav-link--cta.is-active {
+  border-color: var(--accent);
+  background-color: var(--accent);
+  color: #06111f;
+}
+
+/* Desktop navbar: links in a row, hamburger hidden */
+@media (min-width: 768px) {
+  .nav-toggle {
+    display: none;
+  }
+
+  .nav-menu {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0;
+    border-bottom: 0;
+    background-color: transparent;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   12. Footer
+   -------------------------------------------------------------------------- */
+.site-footer {
+  border-top: 1px solid var(--border);
+  background-color: var(--surface);
+  padding-block: var(--space-6) var(--space-5);
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.footer-brand {
+  max-width: 420px;
+}
+
+.footer-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.footer-tagline {
+  margin-top: var(--space-2);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.footer-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+/* "Let's connect" link with a small arrow */
+.footer-connect {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.footer-connect svg {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--transition-fast);
+}
+
+.footer-connect:hover svg {
+  transform: translateX(3px);
+}
+
+/* Round social icon buttons */
+.footer-social,
+.social-icons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-social a,
+.social-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--muted);
+  transition: color var(--transition-fast),
+              border-color var(--transition-fast),
+              background-color var(--transition-fast);
+}
+
+.footer-social a:hover,
+.social-icons a:hover {
+  border-color: var(--border-strong);
+  background-color: var(--surface-2);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.footer-social svg,
+.social-icons svg {
+  width: 18px;
+  height: 18px;
+}
+
+.footer-bottom {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.footer-bottom p {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 640px) {
+  .footer-inner {
+    flex-direction: column;
+  }
+
+  .footer-actions {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   13. Home page
+   -------------------------------------------------------------------------- */
+
+/* Vertical rhythm between page sections */
+.section {
+  margin-top: var(--space-9);
+}
+
+/* Hero */
+.hero {
+  text-align: center;
+  padding-block: var(--space-6) var(--space-8);
+}
+
+.hero-eyebrow {
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  margin-top: var(--space-3);
+  font-size: clamp(2.4rem, 7.2vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.hero-role {
+  margin-top: var(--space-3);
+  color: var(--accent);
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-weight: 500;
+}
+
+.hero-text {
+  max-width: 640px;
+  margin: var(--space-4) auto 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+/* "Let's Connect" strip */
+.connect-panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface);
+}
+
+.connect-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.connect-text {
+  margin-top: var(--space-1);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.connect-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* Shared responsive grid: 1 column, then 2, then 3 */
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+@media (min-width: 640px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* "What I Can Help With" cards */
+.help-card {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.help-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--accent-soft);
+  color: var(--accent);
+}
+
+.help-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.help-card h3 {
+  font-size: 1.05rem;
+}
+
+.help-card p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+/* Project cards */
+.project-card {
+  position: relative;
+  align-items: center;
+  text-align: center;
+}
+
+/* Category badge in the top-right corner */
+.project-badge {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+}
+
+/* Circular icon area above the title */
+.project-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  margin-top: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background-color: var(--accent-soft);
+  color: var(--accent);
+}
+
+.project-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.project-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.project-desc {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+/* Tags stay centered inside the card */
+.project-card .tag-list {
+  justify-content: center;
+}
+
+/* Card footer: separated by a hairline, button pinned to the bottom */
+.project-footer {
+  width: 100%;
+  margin-top: auto;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.project-footer .btn-outline {
+  width: 100%;
+}
+
+.project-footer .btn-outline svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Final call-to-action card */
+.cta-card {
+  align-items: center;
+  text-align: center;
+  gap: var(--space-4);
+  padding: var(--space-8) var(--space-5);
+}
+
+.cta-card h2 {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+.cta-card p {
+  max-width: 520px;
+  color: var(--muted);
+}
+
+@media (max-width: 640px) {
+  .connect-panel {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-actions .btn,
+  .hero-actions .btn-outline {
+    flex: 1 1 100%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   14. Projects page
+   -------------------------------------------------------------------------- */
+
+/* Short page title block at the top of an inner page */
+.page-header {
+  max-width: 640px;
+  margin-bottom: var(--space-8);
+  padding-top: var(--space-2);
+}
+
+.page-header h1 {
+  font-size: clamp(1.9rem, 4.5vw, 2.5rem);
+}
+
+.page-header p {
+  margin-top: var(--space-3);
+  color: var(--muted);
+}
+
+/* Two-column grid: 1 column on phones, 2 from 768px up */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+@media (min-width: 768px) {
+  .grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Development project card */
+.dev-card h3 {
+  font-size: 1.2rem;
+}
+
+.dev-desc {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* "What I learned" note, set off by a thin accent rule */
+.learned {
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--accent);
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.learned span {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Link row pinned to the bottom of a card */
+.card-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: auto;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.link-arrow svg {
+  width: 15px;
+  height: 15px;
+  transition: transform var(--transition-fast);
+}
+
+.link-arrow:hover svg {
+  transform: translate(2px, -2px);
+}
+
+/* Networking lab card: preview image flush to the card edges */
+.lab-card {
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+}
+
+.lab-media {
+  aspect-ratio: 16 / 9;
+  border-bottom: 1px solid var(--border);
+  background-color: var(--surface-2);
+  overflow: hidden;
+}
+
+.lab-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lab-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+}
+
+.lab-title {
+  font-size: 1.1rem;
+}
+
+.lab-desc {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+/* One-line result with a small check icon */
+.lab-result {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.lab-result svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  color: var(--accent);
+}
+
+/* PDF buttons side by side */
+.lab-actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: auto;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.lab-actions .btn,
+.lab-actions .btn-outline {
+  flex: 1 1 0;
+  padding-inline: var(--space-3);
+  font-size: 0.875rem;
+}
+
+.lab-actions svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* --------------------------------------------------------------------------
+   15. About page
+   -------------------------------------------------------------------------- */
+
+/* Intro: round photo beside the name, role and bio */
+.about-intro {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.profile-photo {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 170px;
+  height: 170px;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  background-color: var(--surface-2);
+  overflow: hidden;
+}
+
+/* Monogram shown behind the photo, and while profile.jpg is missing */
+.profile-photo::before {
+  grid-area: 1 / 1;
+  content: "DJ";
+  color: var(--muted);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.profile-photo img {
+  grid-area: 1 / 1;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-intro h1 {
+  font-size: clamp(2.1rem, 5.2vw, 3rem);
+  line-height: 1.15;
+}
+
+.about-role {
+  margin-top: var(--space-2);
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.about-bio {
+  margin-top: var(--space-4);
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.about-bio + .about-bio {
+  margin-top: var(--space-3);
+}
+
+/* Skills: one box per group, tags wrapping inside */
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.skill-group {
+  padding: var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface);
+}
+
+.skill-group h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  font-size: 0.95rem;
+}
+
+.skill-group h3 svg {
+  width: 17px;
+  height: 17px;
+  color: var(--accent);
+}
+
+/* "What I'm looking for": two stacked lists */
+.looking-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+@media (min-width: 768px) {
+  .looking-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.looking-list {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.looking-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.looking-list svg {
+  flex-shrink: 0;
+  width: 17px;
+  height: 17px;
+  margin-top: 3px;
+  color: var(--accent);
+}
+
+/* Certification cards */
+.cert-card h3 {
+  font-size: 1rem;
+}
+
+.cert-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.cert-meta .dot {
+  opacity: 0.5;
+}
+
+/* Vertical timeline */
+.timeline {
+  display: grid;
+  gap: var(--space-6);
+  margin: 0;
+  padding: 0 0 0 var(--space-5);
+  border-left: 1px solid var(--border);
+  list-style: none;
+}
+
+.timeline-item {
+  position: relative;
+}
+
+/* The accent dot on the line */
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  top: 0.5rem;
+  left: calc(-1 * var(--space-5) - 5px);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--bg);
+}
+
+.timeline-item h3 {
+  font-size: 1.05rem;
+}
+
+.timeline-meta {
+  margin-top: var(--space-1);
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.timeline-item p {
+  margin-top: var(--space-2);
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+/* "How to reach me" panel */
+.reach-panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface);
+}
+
+.reach-list {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.reach-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  font-size: 0.92rem;
+}
+
+.reach-row dt {
+  color: var(--muted);
+  min-width: 150px;
+}
+
+.reach-row dd {
+  margin: 0;
+  color: var(--text);
+}
+
+.tag-list--center {
+  justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   16. Contact page
+   -------------------------------------------------------------------------- */
+
+.contact-intro {
+  padding-block: var(--space-4) var(--space-6);
+}
+
+.contact-intro h1 {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+}
+
+.contact-intro > p {
+  max-width: 640px;
+  margin-top: var(--space-4);
+  color: var(--muted);
+  font-size: 1.02rem;
+}
+
+/* Highlighted "preferred contact" note */
+.preferred-note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  max-width: 640px;
+  margin-top: var(--space-5);
+  padding: var(--space-4);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-md);
+  background-color: var(--accent-soft);
+}
+
+.preferred-note svg {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  color: var(--accent);
+}
+
+.preferred-note p {
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.preferred-note strong {
+  display: block;
+  margin-bottom: var(--space-1);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Two columns: contact details beside the form, stacked on small screens */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .contact-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  }
+}
+
+/* Contact details list */
+.contact-info h2 {
+  font-size: 1.25rem;
+}
+
+.contact-list {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contact-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.contact-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-2);
+  color: var(--accent);
+}
+
+.contact-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.contact-label {
+  color: var(--muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.contact-value {
+  font-size: 0.95rem;
+  overflow-wrap: anywhere;
+}
+
+/* Form */
+.contact-form {
+  gap: var(--space-4);
+}
+
+.contact-form h2 {
+  font-size: 1.25rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.field label {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 0.95rem;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #8b93a2; /* 6.0:1 on the page background */
+}
+
+.field input:focus,
+.field textarea:focus {
+  border-color: var(--accent);
+}
+
+.field textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+/* Invalid fields get a red border once the script flags them */
+.field input[aria-invalid="true"],
+.field textarea[aria-invalid="true"] {
+  border-color: #ff6b6b;
+}
+
+/* Inline error text: only visible when the script puts a message inside */
+.field-error {
+  display: none;
+  color: #ff8b8b;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.field-error:not(:empty) {
+  display: block;
+}
+
+/* Form status line (success or failure) */
+.form-status {
+  display: none;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+}
+
+.form-status:not(:empty) {
+  display: block;
+}
+
+.form-status.is-success {
+  border-color: #2f8f5b;
+  background-color: rgba(47, 143, 91, 0.12);
+  color: #8ce0b0;
+}
+
+.form-status.is-error {
+  border-color: #8f3b3b;
+  background-color: rgba(143, 59, 59, 0.12);
+  color: #ffb3b3;
+}
+
+.form-note {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 640px) {
+  .about-intro {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .reach-panel {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-5);
+  }
+
+  .reach-row {
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   17. Interactions and polish
+   -------------------------------------------------------------------------- */
+
+/* Scroll reveal
+   .reveal-ready is only added to <html> by js/main.js, so visitors without
+   JavaScript (or with reduced motion) always see the content. */
+.reveal-ready .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 600ms ease, transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-ready .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Back to top button (created by js/main.js) */
+.back-to-top {
+  position: fixed;
+  right: var(--space-5);
+  bottom: var(--space-5);
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  background-color: var(--surface);
+  color: var(--text);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity var(--transition), transform var(--transition),
+              visibility var(--transition), background-color var(--transition-fast),
+              border-color var(--transition-fast);
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.back-to-top:hover {
+  background-color: var(--surface-2);
+  border-color: var(--accent);
+}
+
+.back-to-top svg {
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 640px) {
+  .back-to-top {
+    right: var(--space-4);
+    bottom: var(--space-4);
+  }
+}
+
+/* Respect reduced motion: no reveal, no lift, no smooth scrolling */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-ready .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .back-to-top {
+    transition: opacity var(--transition-fast), visibility var(--transition-fast);
+    transform: none;
+  }
+}
+
+/* No hover lift either, for the same users */
+@media (hover: hover) and (prefers-reduced-motion: reduce) {
+  .card:hover {
+    transform: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   18. Page transitions and terminal-style name
+   -------------------------------------------------------------------------- */
+
+/* Page enter: <main> fades and rises slightly on load, refresh and after
+   navigating between pages. Kept under half a second so it never feels slow. */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+main {
+  animation: page-enter 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Page exit: js/main.js adds .page-leaving to <html> just before following
+   an internal link, so the old page fades out before the new one loads. */
+html.page-leaving body {
+  opacity: 0;
+  transition: opacity 180ms ease-in;
+}
+
+html.page-leaving main {
+  animation: none;
+}
+
+/* The name is set in a monospace (terminal) face on the home and about pages */
+.cli-name {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Words stay in one piece, but a narrow screen may wrap between them */
+.cli-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* js/main.js wraps each letter in one of these and they fade in one by one,
+   which gives the typewriter effect without the text jumping around. */
+.cli-char {
+  display: inline-block;
+  white-space: pre;
+  opacity: 0;
+  animation: cli-char-in 60ms linear forwards;
+  animation-delay: calc(var(--i, 0) * 55ms);
+}
+
+@keyframes cli-char-in {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Blinking block cursor after the name, like a terminal prompt */
+.cli-caret {
+  display: inline-block;
+  width: 0.6ch;
+  height: 1.02em;
+  margin-left: 0.08em;
+  border-radius: 1px;
+  background-color: var(--accent);
+  vertical-align: -0.14em;
+  /* Hidden until the last letter has been typed, then it blinks */
+  opacity: 0;
+  animation: cli-blink 1.05s steps(1, end) var(--caret-delay, 800ms) infinite;
+}
+
+@keyframes cli-blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+/* No transitions at all for visitors who asked for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  main {
+    animation: none;
+  }
+
+  html.page-leaving body {
+    opacity: 1;
+    transition: none;
+  }
+
+  .cli-char {
+    opacity: 1;
+    animation: none;
+  }
+
+  .cli-caret {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   19. Device compatibility
+   -------------------------------------------------------------------------- */
+
+/* Removes the 300ms tap delay / accidental double-tap zoom on touch screens */
+a,
+button,
+input,
+textarea,
+select {
+  touch-action: manipulation;
+}
+
+/* iOS Safari zooms the whole page when a focused field is under 16px */
+.field input,
+.field textarea {
+  font-size: 1rem;
+}
+
+/* Phones held sideways: keep the hero from eating the whole screen */
+@media (max-height: 520px) and (orientation: landscape) {
+  .hero {
+    padding-block: var(--space-4) var(--space-6);
+  }
+
+  .hero h1 {
+    font-size: clamp(1.9rem, 5vw, 2.8rem);
+  }
+}
+
+/* Very narrow phones (320–380px): stack the lab buttons instead of squeezing */
+@media (max-width: 380px) {
+  .lab-actions {
+    flex-direction: column;
+  }
+
+  .lab-actions .btn,
+  .lab-actions .btn-outline {
+    flex: 1 1 auto;
+  }
+}
+
+/* Large monitors and TVs: use a little more of the available width */
+@media (min-width: 1440px) {
+  :root {
+    --container-width: 1180px;
+  }
+}
+}
