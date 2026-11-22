@@ -42,7 +42,128 @@
   <!-- ============================= PAGE CONTENT ============================= -->
   <main id="main">
 
-    <!-- TODO: contact page content (email, LinkedIn, availability, what I am open to) -->
+    <!-- ================================ INTRO =============================== -->
+    <section>
+      <div class="container contact-intro">
+        <h1>Let's talk</h1>
+        <p>
+          I'm open to entry-level network roles, collaborations, mentorship, and study groups.
+          Whether you want to talk routing and switching, Django, or a lab you're stuck on, I'd
+          be glad to hear from you.
+        </p>
+
+        <div class="preferred-note">
+          <i data-lucide="mail" aria-hidden="true"></i>
+          <p>
+            <strong>Preferred contact</strong>
+            Email or LinkedIn &mdash; both reach me.
+            <a href="mailto:damodarj36@gmail.com">damodarj36@gmail.com</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================= CONTACT + FORM ============================== -->
+    <section class="section">
+      <div class="container contact-grid">
+        <!-- 1. Contact details -->
+        <div class="card contact-info">
+          <h2>Contact details</h2>
+
+          <ul class="contact-list">
+            <li>
+              <span class="contact-icon" aria-hidden="true"><i data-lucide="mail"></i></span>
+              <div>
+                <p class="contact-label">Email</p>
+                <a class="contact-value" href="mailto:damodarj36@gmail.com">damodarj36@gmail.com</a>
+              </div>
+            </li>
+
+            <li>
+              <span class="contact-icon" aria-hidden="true"><i data-lucide="linkedin"></i></span>
+              <div>
+                <p class="contact-label">LinkedIn</p>
+                <a class="contact-value" href="https://www.linkedin.com/in/damodar-joshi-8661382ab"
+                   target="_blank" rel="noopener">damodar-joshi-8661382ab</a>
+              </div>
+            </li>
+
+            <li>
+              <span class="contact-icon" aria-hidden="true"><i data-lucide="github"></i></span>
+              <div>
+                <p class="contact-label">GitHub</p>
+                <a class="contact-value" href="https://github.com/nirvanajoshi"
+                   target="_blank" rel="noopener">github.com/nirvanajoshi</a>
+              </div>
+            </li>
+
+            <li>
+              <span class="contact-icon" aria-hidden="true"><i data-lucide="map-pin"></i></span>
+              <div>
+                <p class="contact-label">Location</p>
+                <p class="contact-value">Kathmandu, Nepal</p>
+              </div>
+            </li>
+
+            <!-- TODO: add a Credly profile link here if you have one -->
+          </ul>
+        </div>
+
+        <!-- 2. Contact form -->
+        <form class="card contact-form" id="contact-form"
+              action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+
+          <!--
+            ============================ FORMSPREE SETUP ============================
+            The form currently posts to a placeholder endpoint. To make it live:
+              1. Sign in at https://formspree.io and create a new form.
+              2. Copy the endpoint it gives you (looks like
+                 https://formspree.io/f/abcdwxyz).
+              3. Replace YOUR_FORM_ID in the action attribute above with your real
+                 form ID.
+              4. In Formspree, set the reply-to address to your email.
+
+            Until YOUR_FORM_ID is replaced, js/main.js detects the placeholder and
+            shows a message instead of sending, so a visitor's message is never
+            silently lost.
+            ==========================================================================
+          -->
+
+          <h2>Send a message</h2>
+
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name"
+                   autocomplete="name" required aria-describedby="name-error">
+            <p class="field-error" id="name-error" aria-live="polite"></p>
+          </div>
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com"
+                   autocomplete="email" required aria-describedby="email-error">
+            <p class="field-error" id="email-error" aria-live="polite"></p>
+          </div>
+
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell me what you'd like to talk about"
+                      required aria-describedby="message-error"></textarea>
+            <p class="field-error" id="message-error" aria-live="polite"></p>
+          </div>
+
+          <button class="btn" type="submit">Send Message</button>
+
+          <!-- Success / failure message is filled in by js/main.js -->
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+
+          <p class="form-note">
+            Prefer email? Write to
+            <a href="mailto:damodarj36@gmail.com">damodarj36@gmail.com</a> instead.
+          </p>
+        </form>
+      </div>
+    </section>
 
   </main>
 

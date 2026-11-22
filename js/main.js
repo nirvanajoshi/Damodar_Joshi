@@ -6,6 +6,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   initNavToggle();
+  initContactForm();
   initFooterYear();
   renderIcons();
 });
@@ -72,4 +73,142 @@ function renderIcons() {
   if (window.lucide && typeof window.lucide.createIcons === "function") {
     window.lucide.createIcons();
   }
+}
+
+/* --------------------------------------------------------------------------
+   Contact form
+   Validates the name / email / message fields before anything is sent, shows
+   a friendly message under each invalid field, and then posts to Formspree.
+   The form's action is a placeholder until a real Formspree ID is added; in
+   that case we say so instead of pretending the message was sent.
+   -------------------------------------------------------------------------- */
+function initContactForm() {
+  var form = document.getElementById("contact-form");
+  if (!form) return; // not on the contact page
+
+  var status = document.getElementById("form-status");
+
+  var fields = {
+    name: {
+      input: document.getElementById("name"),
+      error: document.getElementById("name-error")
+    },
+    email: {
+      input: document.getElementById("email"),
+      error: document.getElementById("email-error")
+    },
+    message: {
+      input: document.getElementById("message"),
+      error: document.getElementById("message-error")
+    }
+  };
+
+  // Each rule returns an error message, or "" when the value is fine.
+  var rules = {
+    name: function (value) {
+      if (!value) return "Please tell me your name.";
+      if (value.length < 2) return "That name looks a little short.";
+      return "";
+    },
+    email: function (value) {
+      if (!value) return "Please add an email address so I can reply.";
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        return "That email address doesn't look right.";
+      }
+      return "";
+    },
+    message: function (value) {
+      if (!value) return "Please write a short message.";
+      if (value.length < 10) return "Could you add a little more detail? (at least 10 characters)";
+      return "";
+    }
+  };
+
+  function showError(name, message) {
+    fields[name].error.textContent = message;
+    fields[name].input.setAttribute("aria-invalid", "true");
+  }
+
+  function clearError(name) {
+    fields[name].error.textContent = "";
+    fields[name].input.removeAttribute("aria-invalid");
+  }
+
+  // Returns true when the field is valid.
+  function validateField(name) {
+    var value = fields[name].input.value.trim();
+    var message = rules[name](value);
+
+    if (message) {
+      showError(name, message);
+      return false;
+    }
+
+    clearError(name);
+    return true;
+  }
+
+  function showStatus(message, type) {
+    status.textContent = message;
+    status.className = "form-status" + (type ? " is-" + type : "");
+  }
+
+  // Validate when a field loses focus, and clear the error as it's corrected.
+  Object.keys(fields).forEach(function (name) {
+    fields[name].input.addEventListener("blur", function () {
+      validateField(name);
+    });
+    fields[name].input.addEventListener("input", function () {
+      if (fields[name].error.textContent) clearError(name);
+    });
+  });
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    var firstInvalid = null;
+
+    Object.keys(fields).forEach(function (name) {
+      var valid = validateField(name);
+      if (!valid && !firstInvalid) firstInvalid = fields[name].input;
+    });
+
+    if (firstInvalid) {
+      firstInvalid.focus();
+      return;
+    }
+
+    var action = form.getAttribute("action") || "";
+
+    // No real Formspree endpoint yet: be honest instead of losing the message.
+    if (action.indexOf("YOUR_FORM_ID") !== -1) {
+      showStatus(
+        "This form isn't connected to Formspree yet, so your message wasn't sent. " +
+        "Please email me at damodarj36@gmail.com in the meantime.",
+        "error"
+      );
+      return;
+    }
+
+    showStatus("Sending your message...", "");
+
+    // Formspree accepts JSON responses when we ask for them this way.
+    fetch(action, {
+      method: "POST",
+      body: new FormData(form),
+      headers: { Accept: "application/json" }
+    })
+      .then(function (response) {
+        if (!response.ok) throw new Error("Request failed");
+        form.reset();
+        showStatus("Thanks — your message is on its way. I'll get back to you as soon as I can.", "success");
+      })
+      .catch(function () {
+        showStatus(
+          "Something went wrong while sending. Please try again, or email me at " +
+          "damodarj36@gmail.com.",
+          "error"
+        );
+      });
+  });
 }
