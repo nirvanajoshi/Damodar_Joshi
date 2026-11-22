@@ -1,0 +1,385 @@
+/* ==========================================================================
+   Damodar Joshi — Personal Networking Portfolio
+   Foundation stylesheet: variables, reset, typography, reusable components.
+   Plain CSS only. No build step, no frameworks.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design tokens
+   Everything visual is driven from here, so the whole site can be re-themed
+   by editing a few values in one place.
+   -------------------------------------------------------------------------- */
+:root {
+  /* Colors — dark, minimal, low-contrast surfaces with a single accent */
+  --bg: #0a0b0d;           /* page background: near-black */
+  --surface: #121418;      /* cards: slightly lighter than the page */
+  --surface-2: #191c22;    /* hovered cards, inputs, secondary chips */
+  --border: #262a32;       /* subtle borders */
+  --border-strong: #363b45;
+  --text: #f3f4f6;         /* primary text */
+  --muted: #9aa1ad;        /* secondary text */
+  --accent: #5b9dff;       /* links, buttons, highlights */
+  --accent-soft: rgba(91, 157, 255, 0.12);  /* tinted backgrounds */
+  --accent-strong: #7fb4ff;                 /* accent on hover */
+
+  /* Spacing scale (4px base) */
+  --space-1: 0.25rem;   /*  4px */
+  --space-2: 0.5rem;    /*  8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.5rem;    /* 24px */
+  --space-6: 2rem;      /* 32px */
+  --space-7: 2.5rem;    /* 40px */
+  --space-8: 3rem;      /* 48px */
+  --space-9: 4rem;      /* 64px */
+  --space-10: 6rem;     /* 96px */
+
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* Layout */
+  --container-width: 1100px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition: 250ms ease;
+
+  /* Shadows */
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset
+   A small, modern reset: predictable box sizing, no default margins,
+   media that never overflows its container.
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Stop iOS from inflating text in landscape */
+  -webkit-text-size-adjust: 100%;
+}
+
+body,
+h1, h2, h3, h4, h5, h6,
+p, figure, blockquote, dl, dd {
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Form controls should inherit the page font */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Long words and URLs shouldn't break the layout on small screens */
+p,
+h1, h2, h3, h4 {
+  overflow-wrap: break-word;
+}
+
+/* --------------------------------------------------------------------------
+   3. Base typography
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); }
+h3 { font-size: clamp(1.15rem, 2.5vw, 1.35rem); }
+h4 { font-size: 1.05rem; }
+
+p {
+  color: var(--text);
+}
+
+small {
+  font-size: 0.85rem;
+}
+
+strong {
+  font-weight: 600;
+  color: var(--text);
+}
+
+::selection {
+  background-color: var(--accent);
+  color: #06111f;
+}
+
+/* --------------------------------------------------------------------------
+   4. Links & focus
+   -------------------------------------------------------------------------- */
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-strong);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Visible, consistent keyboard focus for every interactive element */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. Layout helpers
+   -------------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding-inline: var(--space-4);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6. Buttons
+   .btn        — solid accent button (primary action, e.g. "Contact me")
+   .btn-outline — transparent button with a border (secondary action)
+   Both are pill-shaped and stack full-width on very small screens.
+   -------------------------------------------------------------------------- */
+.btn,
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast),
+              color var(--transition-fast),
+              transform var(--transition-fast);
+}
+
+/* Solid accent button */
+.btn {
+  background-color: var(--accent);
+  color: #06111f;
+}
+
+.btn:hover {
+  background-color: var(--accent-strong);
+  color: #06111f;
+  text-decoration: none;
+}
+
+/* Outline button */
+.btn-outline {
+  background-color: transparent;
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.btn-outline:hover {
+  background-color: var(--surface-2);
+  border-color: var(--accent);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.btn:active,
+.btn-outline:active {
+  transform: translateY(1px);
+}
+
+/* --------------------------------------------------------------------------
+   7. Badges and tags
+   .badge — small status pill, e.g. "Open to internships"
+   .tag   — small pill for tech names, e.g. "Python", "OSPF"
+   -------------------------------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background-color: var(--accent-soft);
+  color: var(--accent-strong);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* A small dot, useful for "available" style badges */
+.badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+/* Static, labelled badges don't need the dot: use .badge--plain */
+.badge--plain::before {
+  display: none;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background-color: var(--surface-2);
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* Optional wrapper so a row of tags wraps neatly */
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+/* --------------------------------------------------------------------------
+   8. Cards
+   -------------------------------------------------------------------------- */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  height: 100%;
+  padding: var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface);
+  transition: transform var(--transition),
+              border-color var(--transition),
+              box-shadow var(--transition);
+}
+
+/* Subtle lift on hover — pointer devices only, so it doesn't stick on touch */
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-card);
+  }
+}
+
+.card p {
+  color: var(--muted);
+}
+
+/* --------------------------------------------------------------------------
+   9. Section titles
+   Centered heading, a short thin gradient rule underneath, then a muted
+   subtitle. Markup:
+
+     <div class="section-title">
+       <h2>Projects</h2>
+       <p>Optional subtitle</p>
+     </div>
+   -------------------------------------------------------------------------- */
+.section-title {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto var(--space-8);
+}
+
+.section-title h2 {
+  margin: 0;
+}
+
+/* The gradient rule under the heading */
+.section-title h2::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 2px;
+  margin: var(--space-4) auto 0;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+.section-title p {
+  margin-top: var(--space-4);
+  color: var(--muted);
+  font-size: 0.975rem;
+}
