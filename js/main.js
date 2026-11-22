@@ -7,6 +7,8 @@
 document.addEventListener("DOMContentLoaded", function () {
   initNavToggle();
   initContactForm();
+  initScrollEffects();
+  initScrollReveal();
   initFooterYear();
   renderIcons();
 });
@@ -210,5 +212,109 @@ function initContactForm() {
           "error"
         );
       });
+  });
+}
+
+/* --------------------------------------------------------------------------
+   Shared motion preference
+   Returns true when the visitor asked their system for reduced motion.
+   -------------------------------------------------------------------------- */
+function prefersReducedMotion() {
+  return window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+/* --------------------------------------------------------------------------
+   Scroll effects: navbar shadow + back to top button
+   Both react to the same scroll event, so the handler is throttled with
+   requestAnimationFrame to keep it cheap.
+   -------------------------------------------------------------------------- */
+function initScrollEffects() {
+  var header = document.querySelector(".site-header");
+  var button = createBackToTopButton();
+
+  function update() {
+    var scrolled = window.scrollY || window.pageYOffset;
+
+    if (header) header.classList.toggle("is-scrolled", scrolled > 8);
+    if (button) button.classList.toggle("is-visible", scrolled > 420);
+  }
+
+  var ticking = false;
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function () {
+      update();
+      ticking = false;
+    });
+  }
+
+  window.addEventListener("scroll", onScroll, { passive: true });
+  update();
+
+  if (button) {
+    button.addEventListener("click", function () {
+      window.scrollTo({
+        top: 0,
+        behavior: prefersReducedMotion() ? "auto" : "smooth"
+      });
+    });
+  }
+}
+
+/* Builds the floating "back to top" button and adds it to the page. */
+function createBackToTopButton() {
+  if (document.querySelector(".back-to-top")) return document.querySelector(".back-to-top");
+
+  var button = document.createElement("button");
+  button.type = "button";
+  button.className = "back-to-top";
+  button.setAttribute("aria-label", "Back to top");
+  button.innerHTML =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+    'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' +
+    '<path d="M12 19V5"></path><path d="M5 12l7-7 7 7"></path></svg>';
+
+  document.body.appendChild(button);
+  return button;
+}
+
+/* --------------------------------------------------------------------------
+   Scroll reveal
+   Cards and section blocks fade up the first time they enter the viewport.
+   The .reveal-ready class on <html> is what activates the CSS, so if this
+   script never runs the content simply stays visible.
+   -------------------------------------------------------------------------- */
+function initScrollReveal() {
+  if (!("IntersectionObserver" in window)) return;
+  if (prefersReducedMotion()) return;
+
+  var targets = document.querySelectorAll(
+    ".card, .section-title, .connect-panel, .about-intro, .contact-intro, " +
+    ".page-header, .skill-group, .timeline-item, .preferred-note"
+  );
+
+  if (!targets.length) return;
+
+  document.documentElement.classList.add("reveal-ready");
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-visible");
+      observer.unobserve(entry.target); // reveal once, then stop watching
+    });
+  }, {
+    threshold: 0.12,
+    rootMargin: "0px 0px -40px 0px"
+  });
+
+  Array.prototype.forEach.call(targets, function (element, index) {
+    element.classList.add("reveal");
+    // Small stagger so grids don't pop in all at once
+    element.style.setProperty("--reveal-delay", (index % 3) * 80 + "ms");
+    observer.observe(element);
   });
 }
