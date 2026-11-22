@@ -42,7 +42,240 @@
   <!-- ============================= PAGE CONTENT ============================= -->
   <main id="main">
 
-    <!-- TODO: projects page content (development projects and Cisco networking labs)
+    <!-- ============================= PAGE HEADER ============================ -->
+    <div class="container">
+      <header class="page-header">
+        <h1>Projects</h1>
+        <p>Cisco Packet Tracer labs and Python/Django builds, kept in the open on GitHub.</p>
+      </header>
+    </div>
+
+    <!-- ========================= DEVELOPMENT PROJECTS ======================= -->
+    <section>
+      <div class="container">
+        <div class="section-title">
+          <h2>Development Projects</h2>
+          <p>Python and Django applications I've built while learning web development.</p>
+        </div>
+
+        <div class="grid-3">
+          <!-- Project 1 -->
+          <article class="card dev-card">
+            <h3>Job Portal V2</h3>
+            <p class="dev-desc">
+              A job portal where employers can post openings and job seekers can browse and
+              apply. The second version improves on my first build.
+            </p>
+            <!-- TODO: add a one-line "what I learned" for Job Portal V2, then uncomment:
+            <p class="learned"><span>What I learned:</span> ...</p>
+            -->
+            <ul class="tag-list">
+              <li><span class="tag">Python</span></li>
+              <li><span class="tag">Django</span></li>
+              <li><span class="tag">HTML</span></li>
+              <li><span class="tag">CSS</span></li>
+            </ul>
+            <div class="card-links">
+              <a class="link-arrow" href="https://github.com/nirvanajoshi/Job_PortalV2" target="_blank" rel="noopener"
+                 aria-label="View Job Portal V2 source code on GitHub (opens in a new tab)">
+                GitHub <i data-lucide="external-link" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="card dev-card">
+            <h3>Skill Swap System</h3>
+            <p class="dev-desc">
+              A platform where people list the skills they can teach and the skills they want
+              to learn, so they can find others to swap with.
+            </p>
+            <!-- TODO: add a one-line "what I learned" for Skill Swap System, then uncomment:
+            <p class="learned"><span>What I learned:</span> ...</p>
+            -->
+            <ul class="tag-list">
+              <li><span class="tag">Python</span></li>
+              <li><span class="tag">Django</span></li>
+              <li><span class="tag">HTML</span></li>
+              <li><span class="tag">CSS</span></li>
+            </ul>
+            <div class="card-links">
+              <a class="link-arrow" href="https://github.com/nirvanajoshi/Skill_Swap_System" target="_blank" rel="noopener"
+                 aria-label="View Skill Swap System source code on GitHub (opens in a new tab)">
+                GitHub <i data-lucide="external-link" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <!-- Project 3: this website -->
+          <article class="card dev-card">
+            <h3>Personal Networking Portfolio</h3>
+            <p class="dev-desc">
+              A static portfolio built with HTML, CSS, and JavaScript to share my work and
+              connect with people. Hosted on GitHub Pages.
+            </p>
+            <!-- TODO: add a one-line "what I learned" for this website, then uncomment:
+            <p class="learned"><span>What I learned:</span> ...</p>
+            -->
+            <ul class="tag-list">
+              <li><span class="tag">HTML</span></li>
+              <li><span class="tag">CSS</span></li>
+              <li><span class="tag">JavaScript</span></li>
+              <li><span class="tag">GitHub Pages</span></li>
+            </ul>
+            <div class="card-links">
+              <a class="link-arrow" href="https://github.com/nirvanajoshi/damodarjoshi" target="_blank" rel="noopener"
+                 aria-label="View this website's source code on GitHub (opens in a new tab)">
+                GitHub <i data-lucide="external-link" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================== NETWORKING LABS ========================== -->
+    <section class="section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Networking Labs</h2>
+          <p>Hands-on Cisco Packet Tracer labs, documented as PDFs.</p>
+        </div>
+
+        <div class="grid-2">
+          <!-- Lab 1 -->
+          <article class="card lab-card">
+            <div class="lab-media">
+              <img src="assets/images/dhcp-server.png"
+                   alt="Packet Tracer topology for the DHCP server lab, showing a router serving VLAN 10 and VLAN 20 clients across two switches"
+                   loading="lazy">
+            </div>
+
+            <div class="lab-body">
+              <h3 class="lab-title">DHCP Server with Inter-VLAN Routing</h3>
+              <p class="lab-desc">
+                Configured a router as a DHCP server with address pools, default gateway, DNS,
+                and excluded address ranges, serving clients in VLAN 10 and VLAN 20 across two
+                switches using inter-VLAN routing.
+              </p>
+              <p class="lab-result">
+                <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                Clients in both VLANs received IP settings automatically, verified with
+                <code>show ip dhcp binding</code> and <code>ipconfig</code>.
+              </p>
+              <ul class="tag-list">
+                <li><span class="tag">DHCP</span></li>
+                <li><span class="tag">Inter-VLAN Routing</span></li>
+                <li><span class="tag">VLANs</span></li>
+                <li><span class="tag">Packet Tracer</span></li>
+              </ul>
+              <div class="lab-actions">
+                <a class="btn" href="assets/pdfs/dhcp-server-configuration.pdf" target="_blank" rel="noopener"
+                   aria-label="View the DHCP server lab PDF in a new tab">
+                  View PDF
+                </a>
+                <a class="btn-outline" href="assets/pdfs/dhcp-server-configuration.pdf" download
+                   aria-label="Download the DHCP server lab PDF">
+                  <i data-lucide="download" aria-hidden="true"></i> Download
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Lab 2 -->
+          <article class="card lab-card">
+            <div class="lab-media">
+              <img src="assets/images/multi-vlan-campus.png"
+                   alt="Packet Tracer topology of the multi-VLAN campus network with a main site and server site linked by OSPF"
+                   loading="lazy">
+            </div>
+
+            <div class="lab-body">
+              <h3 class="lab-title">Secured Multi-VLAN Campus Network</h3>
+              <p class="lab-desc">
+                A full campus network with a Main site and a Server site connected by OSPF:
+                Admin, Students, Faculty, and Server VLANs (DNS and HTTP), trunk links,
+                router-on-a-stick inter-VLAN routing, DHCP, ACLs between departments, VLSM
+                subnetting, and NAT/PAT for internet access.
+              </p>
+              <p class="lab-result">
+                <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                Connectivity verified using ping, traceroute, and show commands.
+              </p>
+              <ul class="tag-list">
+                <li><span class="tag">VLANs</span></li>
+                <li><span class="tag">ACLs</span></li>
+                <li><span class="tag">OSPF</span></li>
+                <li><span class="tag">VLSM</span></li>
+                <li><span class="tag">NAT/PAT</span></li>
+              </ul>
+              <div class="lab-actions">
+                <a class="btn" href="assets/pdfs/secured-multi-vlan-campus-network.pdf" target="_blank" rel="noopener"
+                   aria-label="View the secured multi-VLAN campus network lab PDF in a new tab">
+                  View PDF
+                </a>
+                <a class="btn-outline" href="assets/pdfs/secured-multi-vlan-campus-network.pdf" download
+                   aria-label="Download the secured multi-VLAN campus network lab PDF">
+                  <i data-lucide="download" aria-hidden="true"></i> Download
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Lab 3 -->
+          <article class="card lab-card">
+            <div class="lab-media">
+              <img src="assets/images/telnet-management.png"
+                   alt="Packet Tracer topology for the Telnet lab, showing a device reaching switches and routers over the management network"
+                   loading="lazy">
+            </div>
+
+            <div class="lab-body">
+              <h3 class="lab-title">Remote Device Management using Telnet</h3>
+              <p class="lab-desc">
+                Configured VTY lines, passwords, and management IP addressing to enable remote
+                access to switches and routers via Telnet.
+              </p>
+              <p class="lab-result">
+                <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                Remote logins tested from an end device, with connectivity verified using ping
+                and show commands.
+              </p>
+              <ul class="tag-list">
+                <li><span class="tag">Telnet</span></li>
+                <li><span class="tag">VTY Lines</span></li>
+                <li><span class="tag">Device Management</span></li>
+                <li><span class="tag">Packet Tracer</span></li>
+              </ul>
+              <div class="lab-actions">
+                <a class="btn" href="assets/pdfs/remote-management-telnet.pdf" target="_blank" rel="noopener"
+                   aria-label="View the Telnet remote management lab PDF in a new tab">
+                  View PDF
+                </a>
+                <a class="btn-outline" href="assets/pdfs/remote-management-telnet.pdf" download
+                   aria-label="Download the Telnet remote management lab PDF">
+                  <i data-lucide="download" aria-hidden="true"></i> Download
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ COLLABORATE CTA ========================= -->
+    <section class="section">
+      <div class="container">
+        <div class="card cta-card">
+          <h2>Want to collaborate on something?</h2>
+          <p>
+            I'm open to entry-level network roles, collaborations, mentorship, and study
+            groups. The fastest way to reach me is by email.
+          </p>
+          <a class="btn" href="contact.html">Get in Touch</a>
+        </div>
+      </div>
+    </section>
 
   </main>
 
