@@ -383,3 +383,310 @@ select:focus-visible {
   color: var(--muted);
   font-size: 0.975rem;
 }
+
+/* --------------------------------------------------------------------------
+   10. Page shell
+   Sticky header + <main> that grows, so the footer always sits at the bottom
+   of the window even on short pages.
+   -------------------------------------------------------------------------- */
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+  padding-block: var(--space-8) var(--space-10);
+}
+
+/* --------------------------------------------------------------------------
+   11. Navbar
+   Sticky, translucent, blurred. Below 768px the links collapse into a
+   hamburger panel; above that they sit in a row on the right.
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--border);
+  background-color: rgba(10, 11, 13, 0.78);
+  /* Glass effect: blurs the page content scrolling underneath */
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.navbar {
+  position: relative; /* anchor for the mobile menu panel */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: 68px;
+}
+
+/* Logo: bold text inside a bordered, rounded box */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.logo:hover {
+  border-color: var(--accent);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.logo-mark {
+  color: var(--accent);
+}
+
+/* Hamburger button (mobile only) */
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background-color: transparent;
+  color: var(--text);
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast);
+}
+
+.nav-toggle:hover {
+  background-color: var(--surface-2);
+  border-color: var(--border-strong);
+}
+
+.nav-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Only show the matching icon for the current open/closed state */
+.nav-toggle .icon-close {
+  display: none;
+}
+
+.nav-toggle[aria-expanded="true"] .icon-menu {
+  display: none;
+}
+
+.nav-toggle[aria-expanded="true"] .icon-close {
+  display: inline-flex;
+}
+
+/* Mobile menu panel (closed by default) */
+.nav-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: none;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-4) var(--space-4) var(--space-5);
+  list-style: none;
+  border-bottom: 1px solid var(--border);
+  background-color: rgba(10, 11, 13, 0.98);
+}
+
+.nav-menu.is-open {
+  display: flex;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color var(--transition-fast),
+              background-color var(--transition-fast),
+              border-color var(--transition-fast);
+}
+
+.nav-link:hover {
+  border-color: var(--border-strong);
+  background-color: var(--surface-2);
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Active page: highlighted pill */
+.nav-link.is-active {
+  border-color: var(--border-strong);
+  background-color: var(--surface-2);
+  color: var(--text);
+}
+
+/* Contact stands out a little more than the other links */
+.nav-link--cta {
+  border-color: var(--accent);
+  background-color: var(--accent-soft);
+  color: var(--accent-strong);
+}
+
+.nav-link--cta:hover,
+.nav-link--cta.is-active {
+  border-color: var(--accent);
+  background-color: var(--accent);
+  color: #06111f;
+}
+
+/* Desktop navbar: links in a row, hamburger hidden */
+@media (min-width: 768px) {
+  .nav-toggle {
+    display: none;
+  }
+
+  .nav-menu {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0;
+    border-bottom: 0;
+    background-color: transparent;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   12. Footer
+   -------------------------------------------------------------------------- */
+.site-footer {
+  border-top: 1px solid var(--border);
+  background-color: var(--surface);
+  padding-block: var(--space-6) var(--space-5);
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.footer-brand {
+  max-width: 420px;
+}
+
+.footer-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.footer-tagline {
+  margin-top: var(--space-2);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.footer-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+/* "Let's connect" link with a small arrow */
+.footer-connect {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.footer-connect svg {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--transition-fast);
+}
+
+.footer-connect:hover svg {
+  transform: translateX(3px);
+}
+
+/* Round social icon buttons */
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--muted);
+  transition: color var(--transition-fast),
+              border-color var(--transition-fast),
+              background-color var(--transition-fast);
+}
+
+.footer-social a:hover {
+  border-color: var(--border-strong);
+  background-color: var(--surface-2);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.footer-social svg {
+  width: 18px;
+  height: 18px;
+}
+
+.footer-bottom {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.footer-bottom p {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 640px) {
+  .footer-inner {
+    flex-direction: column;
+  }
+
+  .footer-actions {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+}

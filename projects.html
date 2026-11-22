@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects — Damodar Joshi</title>
+
+  <!-- Inter font from Google Fonts (preconnecting speeds up the request) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Site stylesheet: relative path so it works on the /damodarjoshi/ subpath -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===================== NAVBAR (shared on every page) ===================== -->
+  <header class="site-header">
+    <nav class="navbar container" aria-label="Primary">
+      <!-- Logo inside a bordered, rounded box -->
+      <a class="logo" href="index.html" aria-label="Damodar Joshi — home">
+        <span class="logo-mark" aria-hidden="true">&lt;/&gt;</span> Damodar
+      </a>
+
+      <!-- Hamburger toggle: only visible below 768px -->
+      <button class="nav-toggle" type="button"
+              aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu">
+        <span class="icon-menu" aria-hidden="true"><i data-lucide="menu"></i></span>
+        <span class="icon-close" aria-hidden="true"><i data-lucide="x"></i></span>
+      </button>
+
+      <ul class="nav-menu" id="nav-menu">
+        <li><a class="nav-link" href="index.html">Home</a></li>
+        <li><a class="nav-link" href="about.html">About</a></li>
+        <li><a class="nav-link is-active" href="projects.html" aria-current="page">Projects</a></li>
+        <li><a class="nav-link nav-link--cta" href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ============================= PAGE CONTENT ============================= -->
+  <main id="main">
+
+    <!-- TODO: projects page content (development projects and Cisco networking labs)
+
+  </main>
+
+  <!-- ===================== FOOTER (shared on every page) ==================== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <p class="footer-name">Damodar Joshi</p>
+        <p class="footer-tagline">I build and secure networks, and I write Python to automate them.</p>
+      </div>
+
+      <div class="footer-actions">
+        <a class="footer-connect" href="contact.html">
+          Let's connect
+          <i data-lucide="arrow-right" aria-hidden="true"></i>
+        </a>
+
+        <ul class="footer-social" aria-label="Social links">
+          <li>
+            <a href="https://github.com/nirvanajoshi" target="_blank" rel="noopener" aria-label="GitHub">
+              <i data-lucide="github" aria-hidden="true"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/damodar-joshi-8661382ab" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <i data-lucide="linkedin" aria-hidden="true"></i>
+            </a>
+          </li>
+          <li>
+            <a href="mailto:damodarj36@gmail.com" aria-label="Email">
+              <i data-lucide="mail" aria-hidden="true"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>&copy; <span id="year">2026</span> Damodar Joshi. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Lucide icons (CDN) must load before main.js calls lucide.createIcons() -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>
